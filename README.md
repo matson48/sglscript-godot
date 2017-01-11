@@ -1,5 +1,6 @@
 # SGLscript for Godot
 ![Screenshot of the 3d-scene example](sglscript-screenshots/cube.jpg) 
+
 SGLscript is a small scripting/markup language that originated in an unfinished Python game framework I made called [SGL](https://github.com/m48/sgl). This is an enhanced port of it to Godot. It is designed to provide a lightweight framework for implementing game cutscenes.
 
 It is MIT licensed, like Godot.
@@ -27,7 +28,7 @@ Commands with no arguments consist only of the command name enclosed in square b
 
 Commands with arguments consist of the command name, followed by a colon, then the arguments. Arguments consist of the argument name, followed by a colon, and then the argument value. Additional arguments are separated by whitespace.
 
-Argument values can be numbers (`2`, `-3`, `0.5`...) or strings (`"hello there"`, `'hello there'`, `'"hi there," Bob\'s dogs said"). Numbers can be integers or floats. Strings can being enclosed in single or double quotes, as in Python. Backslashes can escape the other quote. They work like backslashes in the rest of SGLscript, so C escape sequences like "\n" will not work.
+Argument values can be numbers (`2`, `-3`, `0.5`...) or strings (`"hello there"`, `'hello there'`...). Numbers can be integers or floats. Strings can being enclosed in single or double quotes, as in Python. Backslashes can escape the other quote. They work like backslashes in the rest of SGLscript, so C escape sequences like "\n" will not work.
 
 Strings can eschew quotes. When this happens, only a single word is considered part of the argument value, and it is converted to lowercase during parsing.
 
@@ -51,11 +52,11 @@ SGLscript has a few built-in commands to let users define simple syntax construc
 
 Will not be used if `do_macros` in [SGLscriptParser.gd](addons/SGLscript/SGLscriptParser.gd) is false.
 
-`[define all caps header handler: command: "text" argument: "text"]` will turn first line of paragraphs into a command if it is in all caps. The name of this command is specified by the "command" argument, and the argument the contents of the line are sent to is specified by "argument". Useful to support a subset of [Fountain](http://fountain.io/) syntax. This command is stripped out by parsing.
+`[define all caps header handler: command: "text" argument: "text"]` will turn the first line of paragraphs into a command if it is in all caps. The name of this command is specified by the "command" argument, and the argument the contents of the line are sent to is specified by "argument". Useful to support a subset of [Fountain](http://fountain.io/) syntax. This command is stripped out by parsing.
 
 Will not be used if `do_line_macros` in [SGLscriptParser.gd](addons/SGLscript/SGLscriptParser.gd) is false.
 
-***Warning:** This will currently consider lines consisting of nothing but symbols as all caps, because of the way I worked around Godot's lack of an `is_upper` function. This will be fixed.*
+* **Warning:** This will currently consider lines consisting of nothing but symbols as all caps, because of the way I worked around Godot's lack of an `is_upper` function. This will be fixed.
 
 ### Other syntax
 Comments begin with ";;". They last until the end of the line. There are no block comments.
@@ -67,17 +68,20 @@ Everything else is text that will be sent to text boxes. Your program can choose
 ## Using SGLscript
 To use SGLscript, include the `addons/SGLscript` folder in your project, either manually or through the Godot Asset Library.
 
-***Warning:** If you're installing SGLscript from the Asset Library, and you've already started a project, make sure to check off "engine.cfg" when it asks you which SGLscript files you want to add. Installing from the Asset Library puts things directly in your project's root folder, so if that's left on, it will destroy all of your project's settings.
+* **Warning:** If you're installing SGLscript from the Asset Library, and you've already started a project, make sure to check off "engine.cfg" when it asks you which SGLscript files you want to add. Installing from the Asset Library puts things directly in your project's root folder, so if that's left on, it will destroy all of your project's settings.
 
-These settings are what the example scenes will run best in, though. You may want to make a separate project just to see the example scenes as they are intended.*
+  These settings are what the example scenes will run best in, though. You may want to make a separate project just to see the example scenes as they are intended.
 
 ![Screenshot of the plugin configuration tab](sglscript-screenshots/plugin.png) 
+
 Then, in the editor, go to Scene -> Project Settings, go to the Plugin tab, and change the SGLscript plugin to "Active".
 
 ![Screenshot of the node adding window](sglscript-screenshots/node-list.png) 
+
 Now, when you go to add a node to your scene, "SGLscriptInterpreter" should be listed.
 
 ![Screenshot of SGLscriptInterpreter's properties](sglscript-screenshots/properties.png) 
+
 SGLscriptInterpreter has two exported properties:
 
 * "Filename", which determines what SGLscript text file to load when the scene begins
@@ -85,7 +89,8 @@ SGLscriptInterpreter has two exported properties:
 
 It is possible to do this all with GDscript—these properties are just to save time.
 
-![Screenshot of SGLscriptInterpreter with two child nodes](sglscript-screenshots/properties.png) 
+![Screenshot of SGLscriptInterpreter with two child nodes](sglscript-screenshots/scene-struct.png) 
+
 In order for SGLscriptInterpreter to do anything, it must have child nodes with scripts attached.
 
 Whenever the interpreter encounters a command, it will look through its children for a function named "sgl_command_" followed by the command name with the spaces replaced by underscores. So, `[do thing]` would execute the function "sgl_command_do_thing". This function will be passed one argument—a dictionary containing the arguments to the SGL command. A typical command handler will look like this:
@@ -118,7 +123,7 @@ For more details, the examples should give you a better idea on the practical ap
 Currently, this just lists the properties that are recommended for you to use in your own programs. Things not listed may change.
 
 **filename** (string)
-The filename of the currently open script file. Set to "" if you load a script from a string. Also used _ready() to load the specified file at the beginning of the scene.
+The filename of the currently open script file. Is set to "" if you load a script from a string. Also used in _ready() to load the specified file at the beginning of the scene.
 
 **auto_start** (boolean)
 Whether to start executing any script as soon as it is loaded.
@@ -132,7 +137,7 @@ Whether the interpreter is currently paused or not.
 **pause_code** (integer)
 If the interpreter is paused, the reason for the pause. Set to -1 before any scripts are loaded, and to 0 during script execution.
 
-**label_command** (SGLscriptParser.Command instance or null)
+**label_command** (`SGLscriptParser.Command` instance or null)
 A reference to the command of the label the interpreter is currently inside. If you specify extra arguments in your labels, this could be used to retrieve extra metadata from them.
 
 ### SGLscriptInterpreter Methods
