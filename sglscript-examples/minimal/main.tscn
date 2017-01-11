@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=1]
+
+[ext_resource path="res://addons/SGLscript/SGLscriptInterpreter.gd" type="Script" id=1]
+[ext_resource path="res://addons/SGLscript/icon.png" type="Texture" id=2]
+[ext_resource path="res://sglscript-examples/minimal/message_window.gd" type="Script" id=3]
+[ext_resource path="res://sglscript-examples/res/shadowy-font.fnt" type="BitmapFont" id=4]
+[ext_resource path="res://sglscript-examples/res/shadowy-font-bold.fnt" type="BitmapFont" id=5]
+[ext_resource path="res://sglscript-examples/minimal/face.gd" type="Script" id=6]
+
+[node name="root" type="Node"]
+
+[node name="SGLscriptInterpreter" type="Node" parent="."]
+
+script/script = ExtResource( 1 )
+__meta__ = { "_editor_icon":ExtResource( 2 ) }
+filename = "res://sglscript-examples/minimal/minimal_script.sglscript"
+auto_start = true
+
+[node name="mwin" type="Panel" parent="SGLscriptInterpreter"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 25.0
+margin/top = 436.0
+margin/right = 994.0
+margin/bottom = 570.0
+script/script = ExtResource( 3 )
+
+[node name="dialogue" type="Label" parent="SGLscriptInterpreter/mwin"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 12.0
+margin/top = 13.0
+margin/right = 838.0
+margin/bottom = 122.0
+custom_fonts/font = ExtResource( 4 )
+text = "dsgsdg dsgag"
+autowrap = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="advance_button" type="Button" parent="SGLscriptInterpreter/mwin"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 852.0
+margin/top = 13.0
+margin/right = 957.0
+margin/bottom = 120.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Advance"
+flat = false
+
+[node name="face" type="Label" parent="SGLscriptInterpreter"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 19.0
+margin/top = 21.0
+margin/right = 1010.0
+margin/bottom = 415.0
+custom_fonts/font = ExtResource( 5 )
+text = ":)"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script/script = ExtResource( 6 )
+
+[connection signal="pressed" from="SGLscriptInterpreter/mwin/advance_button" to="SGLscriptInterpreter/mwin" method="advance"]
+
+

@@ -1,0 +1,169 @@
+Hello there. This is a demonstration of the simplest possible application of SGLscript.
+
+SGLscript is a small, simple domain specific markup language designed for making writing cutscenes for games much easier.
+
+It has particular applications for text heavy games, such as adventure games and visual novels.
+
+[Set face: text: ":|"]
+Existing solutions depend on attempting to mix prose with code in a way that is difficult for both programmers and writers to understand.
+
+SGLscript allows writers to write their game scripts in almost exactly the same way they would write scripts by hand.
+
+[Set face: text: ":)"]
+In SGLscript, there is no need to escape characters like "quotation marks" or 'apostrophes'.
+
+And telling the game you intend to break into a new text box is extremely simple--you just separate paragraphs with a blank line, just like Markdown.
+
+By default, the only special character is \[, since commands are enclosed in square braces.
+
+[Set face: text: "[command name]"]
+Simple commands are just the command name surrounded by square braces.
+
+[Set face: text: "text text text [command name] text text text"]
+They can be placed anywhere in your script, even in the middle of text.
+
+[Set face: text: "[command name: argument name: \"stuff\" other argument name: \"other stuff\"]"]
+If you want to pass arguments to a command, the change how it behaves, that looks like this.
+
+You have the command name, followed by a colon. Then, you specify the arguments--the parameters--that will specify how the command will behave.
+
+These work just like the command name. You have the argument name, followed by a colon, then that argument's value.
+
+[Set face: text: "[command name: argument name: \"stuff\" other argument name: 42]"]
+You can use text and numbers as arguments.
+
+[Set face: text: "[command name: argument name: \'stuff\' other argument name: 42]"]
+Text can be enclosed in both apostrophes and quotation marks, just like Python.
+
+[Set face: text: "[command name: argument name: stuff other argument name: 42]"]
+If you leave off the quotation marks, you can still specify text values, but they can only be a single word long.
+
+In addition, they will be converted to lowercase behind-the-scenes.
+
+[Set face: text: "[ Command name:  argument Name: stuff   Other argument NAME :  42 ]"]
+SGLscript does not care about capitalization or whitespace in commands, so you can get quite messy with how you call them.
+
+This is useful when writing with programs optimized for dealing with prose, like Word or Dragon NaturallySpeaking.
+
+I personally use Dragon NaturallySpeaking to dictate all of my code and prose, so I needed a markup language that would cooperate with its quirks a little better.
+
+[Set face: text: '[define macro: old: "=10" new: "[wait: time: 10]"]']
+There are a few built-in commands.
+
+The most complicated one is "define macro", which tells the interpreter to replace the text in "old" with "new" whenever it appears.
+
+In this case, whenever the text "=10" is encountered, it will be replaced with the command invocation "\[wait: time: 10]".
+
+This can be used to automate typing long commands.
+
+[Set face: text: 'AAAA [no space] AAAA']
+The next is "no space". This gets rid of all whitespace before and after its invocation.
+
+For example, this would produce the text "AAAA [no space] AAAA" instead of "AAAA AAAA".
+
+This can be useful when spreading things over multiple lines, and when making macros that have the same whitespace clearing properties as paragraphs.
+
+[Set face: text: '[define all caps header handler: command: "set name" argument: "text"]']
+"define all caps header handler" is a bit domain specific, but can still be very useful.
+
+This command will turn first line of paragraphs into a command if it is in all caps.
+
+The name of this command is specified by the "command" argument, and the argument the text is sent to is specified by "argument".
+
+So this would make a line containing nothing but "BOB" turn into \[set name: text: "BOB"].
+
+This is useful for writing scripts in Fountain, or screenplay format. It's currently impossible to parse all of Fountain with SGLscript, but this at least allows you to specify who's speaking in a familiar way.
+
+[Set face: text: '[label: name: "stuff"]']
+The last special command is "label". This will define a spot in the script that the interpreter can jump back to later.
+
+It is not handled as specially as the other ones, which are actually stripped out of the script during the parsing process.
+
+Labels are, however, specially kept track of by the interpreter, so jumping between them is quick.
+
+[Set face: text: "this is not a \\[command]  ;; this is a comment"]
+There are only two special syntax elements other than \[ in SGLscript.
+
+One is the backslash, which makes the interpreter consider the character after it plain text instead of anything special.
+
+You must use this, among other things, if you want to include a "\[" character in your text without SGLscript thinking you are beginning a command call.
+
+The other is "\;;". This defines comments--parts of your script that will be completely ignored by the interpreter.
+
+When SGLscript encounters a "\;;", it will ignore everything from there until the end of the line.
+
+You can use this to add extra note to your scripts, or to temporarily turn off sections that do not work.
+
+[Set face: text: ":)"]
+From the programmer's perspective, SGLscript also makes things easier.
+
+To use SGLscript in your game, just put the "SGLscriptInterpreter" node into your scene somewhere.
+
+It has properties that let you choose which file to initially load a script from, and whether the script will automatically be executed when the scene starts.
+
+[Set face: text: "func sgl_command_do_thing(arguments):"]
+To define commands for scripts to use, add child nodes to the interpreter, and define functions that begin with "sgl_command_" in their scripts.
+
+These functions will be called whenever their corresponding command is encountered in the script. They are passed a single argument--a dictionary with the arguments the user passed to the command.
+
+For example, this function would handle the command \[do thing]. In that case, the arguments dictionary would be empty.
+
+But if the command was called like \[do thing: stuff: 42 picture: "thing"], the arguments dictionary would be set to {"stuff": 42, "picture": "thing"}.
+
+[Set face: text: ":)"]
+This makes defining new commands as easy as making new functions in certain scripts. No worrying about writing any extra code for binding or changing the SGLscript interpreter code.
+
+The fact that SGLscriptInterpreter scans all of its child nodes for commands means you can divide your command definitions into multiple other nodes based on category, which is good for organization.
+
+[Set face: text: "func sgl_command_paragraph(arguments):"]
+There is only one command that behaves a bit differently than you may expect--the \[paragraph] command.
+
+This command is automatically added at the end of every paragraph in the script.
+
+If you want your application to use paragraphs for anything, you must define a function to handle this command somewhere.
+
+For example, this program pauses the interpreter at the end of each paragraph, and waits for the user to click the "Advance" button to resume execution of it.
+
+You may want to handle paragraphs differently, however. For example, some applications may want to have paragraphs merely space out text, and handle pausing the interpreter with a different command.
+
+[Set face: text: "interpreter.pause(1)"]
+Pausing the interpreter occasionally is extremely important. If you do not pause the interpreter occasionally, every command in the script will be executed on the same frame.
+
+This is usually not what you want.
+
+To pause the interpreter, call the SGLscriptInterpreter's "pause" method. It takes one argument--the "pause code".
+
+This sets the interpreter's "pause_code" variable to whatever you specify. This value is meaningless to the interpreter, but it can be used by your code to treat different kind of pauses differently.
+
+For example, if the interpreter is paused while waiting for an animation to finish, you could use a different pause code for that, so the GUI elements related to advancing dialogue know not to appear.
+
+[Set face: text: "interpreter.advance()"]
+To resume the interpreter from a pause, just call the interpreter node's "advance" method.
+
+"advance" must be called at least once for any of the script to execute at all.
+
+If the "Auto Start" property is turned on, "advance" will automatically be called whenever a new script is loaded.
+
+[Set face: text: 'interpreter.goto_label("main")']
+Currently, there is only one command designed to facilitate interactive SGLscript programs.
+
+goto_label will make the interpreter go to the label with the name of its argument.
+
+If the specified label does not exist, the interpreter will continue as normal.
+
+More commands to move through SGLscript programs nonlinearly will likely be added in the future.
+
+[Set face: text: "func handle_text(text):"]
+Displaying text outside of commands is handled by a special "handle_text" function. When the interpreter encounters text, this will be called with one argument--the text to add or display.
+
+This must also be defined in a child node of the interpreter. Whichever "handle_text" function the interpreter finds first while traversing its children will be the one that gets called.
+
+If you want to use SGLscript without text (to, for example, use its command syntax in configuration files), you can choose to not define a "handle_text" function, and everything except commands will be ignored.
+
+[Set face: text: ":)"]
+That is about all I can cover with SGLscript in here. Please look at the examples to see how to use these features in more advanced ways.
+
+I hope this framework can help you make more interesting games in Godot.
+
+
+

@@ -1,0 +1,72 @@
+;; A comment
+[define macro: old: "=10" new: "[wait: time: 10]"]
+
+[Label: name: "stuff"] ;; Everything is case-insensitive
+        It started good.
+
+        [Show background: name: "tree"]
+
+        It was a nice day.=10 This is \[not] a command.
+
+        This is \;;not a comment
+
+        AAAAAAA[no space] ;; hi there
+        AAAAAAA[no space] ;; wheee
+        AAAAAAA ;; sdgasdg
+        
+        A [i]really[/i] nice day. ;; Can simulate BB code
+
+        [Character: name: "Mary" expression: "happy"]
+        And then... [wait: time: 0.5] I saw her.
+
+        There were a lot of...[wait: time: 1] problems with this.
+
+[Define macro: old: "`" new: "[no space][continue][no space]"]
+[define all caps header handler: command: "name" argument: "text"]
+
+[Label: name: "screenplay test"]
+    BOB
+    I don't know.
+    `
+    I really don't know.
+    `
+    It's just...=10 so hard.
+
+    Bob looks down remorsefuly.
+    `
+    I'm not sure if I should say anything.
+
+    ME
+    What is?
+    `
+    What's so hard?
+
+[Label: name: "skippy test"]
+
+    ;; These two commands should be parsed exactly the same
+
+    [command name: arg 1: "hi"
+                   arg 2: "there"
+                   arg 3: "everyone"
+                   arg 4: 42]
+
+        [     ;; start
+
+            command ;; lol
+           name  : ;; here too
+      arg
+             1 : "hi"
+          ;; hee hee
+  arg 2: "there"
+
+        arg 3: ;; hahaha
+    ;; hohoho
+    ;;  O
+    ;; \|/
+    ;;  |
+    ;; / \
+     "everyone"
+
+     arg 4: 42;; :(
+
+         ]

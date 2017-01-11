@@ -1,0 +1,50 @@
+[Define macro: old: "`" new: "[no space][continue][no space]"]
+[define all caps header handler: command: "name" argument: "name"]
+
+[Label: name: "test"]
+     BOB
+     Where am I?
+
+     This looks like some weird digital wasteland.
+
+     [Play animation: name: "approach"]
+
+     And this cube is strange.
+
+     Too strange.
+
+     I feel like I have seen it before.
+
+     But that's impossible...
+
+     [Play animation: name: "turn"]
+
+     I've never been here before in my life.
+
+     I think I'd remember that, for one.
+
+     This doesn't look like anything at all I've seen in the real world.
+
+     In fact, it looks like all that's here is that cube.
+
+     That one... mysterious... cube.
+
+     Just sitting there... spinning slowly.
+
+     It's making me a little uncomfortable just looking at it, to be honest.
+
+     I think I'm just going to slowly... back away.
+
+     [Play animation: name: "back away"]
+
+     Slowly... yeah.
+
+     Ha ha ha...
+
+     Is it just me, or is that...?
+
+     [Play animation: name: "cube attack"]
+
+     AAAAAAAAAAAAAAAAAAAAAadadasa;lksdfaAAAAA
+
+     blkbsldjgslkdgjeiulaaaaaaaaaaaaa
