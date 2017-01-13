@@ -8,6 +8,7 @@ func sgl_command_play_animation(arguments):
      interpreter.pause(2)
      message_window.hide()
 
+# Bound to the animation player's finished signal
 func animation_finished():
      message_window.show()
      interpreter.advance()

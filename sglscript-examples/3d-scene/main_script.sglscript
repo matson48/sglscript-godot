@@ -1,50 +1,46 @@
-[Define macro: old: "`" new: "[no space][continue][no space]"]
-[define all caps header handler: command: "name" argument: "name"]
+[Set name: name: "Bob"]
+Where am I?
 
-[Label: name: "test"]
-     BOB
-     Where am I?
+This looks like some weird digital wasteland.
 
-     This looks like some weird digital wasteland.
+[Play animation: name: "approach"]
 
-     [Play animation: name: "approach"]
+And this cube is strange.
 
-     And this cube is strange.
+Too strange.
 
-     Too strange.
+I feel like I have seen it before.
 
-     I feel like I have seen it before.
+But that's impossible...
 
-     But that's impossible...
+[Play animation: name: "turn"]
 
-     [Play animation: name: "turn"]
+I've never been here before in my life.
 
-     I've never been here before in my life.
+I think I'd remember that, for one.
 
-     I think I'd remember that, for one.
+This doesn't look like anything at all I've seen in the real world.
 
-     This doesn't look like anything at all I've seen in the real world.
+In fact, it looks like all that's here is that cube.
 
-     In fact, it looks like all that's here is that cube.
+That one... mysterious... cube.
 
-     That one... mysterious... cube.
+Just sitting there... spinning slowly.
 
-     Just sitting there... spinning slowly.
+It's making me a little uncomfortable just looking at it, to be honest.
 
-     It's making me a little uncomfortable just looking at it, to be honest.
+I think I'm just going to slowly... back away.
 
-     I think I'm just going to slowly... back away.
+[Play animation: name: "back away"]
 
-     [Play animation: name: "back away"]
+Slowly... yeah.
 
-     Slowly... yeah.
+Ha ha ha...
 
-     Ha ha ha...
+Is it just me, or is that...?
 
-     Is it just me, or is that...?
+[Play animation: name: "cube attack"]
 
-     [Play animation: name: "cube attack"]
+AAAAAAAAAAAAAAAAAAAAAadadasa;lksdfaAAAAA
 
-     AAAAAAAAAAAAAAAAAAAAAadadasa;lksdfaAAAAA
-
-     blkbsldjgslkdgjeiulaaaaaaaaaaaaa
+blkbsldjgslkdgjeiulaaaaaaaaaaaaa
