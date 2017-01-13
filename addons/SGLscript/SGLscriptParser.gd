@@ -98,7 +98,7 @@ func parse_line():
     var current_char = ""
     var block = ""
 
-    while current_char != "\n":
+    while in_bounds() and current_char != "\n":
         current_char = get_character()
 
         if is_whitespace(current_char):
