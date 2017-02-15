@@ -2,7 +2,7 @@
 [define macro: old: "=10" new: "[wait: time: 10]"]
 
 [Label: name: "stuff"] ;; Everything is case-insensitive
-        It started good.
+        It started good.  [command]
 
         [Show background: name: "tree"]
 

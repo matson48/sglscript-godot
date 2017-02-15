@@ -247,6 +247,7 @@ func parse(text):
     var line_empty = true
     var paragraph_empty = true
     var suppress_space = false
+    var last_text_index = -1
 
     while in_bounds():
         current_char = get_character()
@@ -255,6 +256,7 @@ func parse(text):
         if current_char == "\\":
             next()
             add_character(get_character())
+            last_text_index = result.size()-1
 
         # Macros
         elif do_macros and current_char in macro_beginnings:
@@ -277,7 +279,9 @@ func parse(text):
 
             if not macro_used:
                 add_character(current_char)
+                last_text_index = result.size()-1
                 line_empty = false
+                paragraph_empty = false
 
         # Commands
         elif current_char == "[":
@@ -287,6 +291,9 @@ func parse(text):
                 label_map[block.arguments["name"]] = result.size()
                 # Who made arrays use size() insead of length() to get
                 # how many items are in them!?
+
+                # Treat labels like new paragraphs
+                paragraph_empty = true
 
                 add(block)
 
@@ -305,6 +312,7 @@ func parse(text):
 
             else:
                 add(block)
+                line_empty = false
 
         # Comments
         elif current_char == ";" and get_next_character() == ";":
@@ -317,10 +325,12 @@ func parse(text):
 
         # Newlines/paragraph logic
         elif current_char == "\n":
-            if line_empty and is_last_string():
+            if line_empty and not paragraph_empty:
                 # Prevent paragraphs from ending with whitespace
-                if last_item()[-1] == " ":
-                    result[-1] = result[-1].strip_edges(false, true)
+                result[last_text_index] = result[last_text_index].strip_edges(false, true)                
+
+                # if is_last_string() and last_item()[-1] == " ":
+                #     result[-1] = result[-1].strip_edges(false, true)
 
                 if add_paragraph_commands:
                     block = Command.new()
@@ -341,6 +351,7 @@ func parse(text):
                 (not is_last_string() and not line_empty)):
                 if not suppress_space:
                     add_character(current_char)
+                    last_text_index = result.size()-1
 
         # Visible characters
         else:
@@ -359,12 +370,12 @@ func parse(text):
                         block.arguments[caps_header_argument] = line_text
                         add(block)
 
-                        next()
                         continue
                     else:
                         index = old_index
             
             add_character(current_char)
+            last_text_index = result.size()-1
             suppress_space = false
             line_empty = false
             paragraph_empty = false
