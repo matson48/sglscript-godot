@@ -42,9 +42,11 @@ func prepare_script():
     script = parser.parse(script_text)
     label_map = parser.label_map
 
-    index = 0
     if auto_start:
+        index = 0   
         advance()
+    else:
+        index = -1
 
 func in_bounds():
     return index < script.size()
