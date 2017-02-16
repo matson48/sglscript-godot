@@ -86,9 +86,9 @@ func add_character(character):
     else:
         add(character)
 
-func is_whitespace(char):
-    return (char == " " or char == "\t" or char == "\n"
-            or char == "\r")
+func is_whitespace(character):
+    return (character == " " or character == "\t" 
+            or character == "\n" or character == "\r")
 
 func parse_whitespace():
     while is_whitespace(get_character()):
